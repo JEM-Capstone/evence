@@ -2,12 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import expo from 'expo'
-import { Test } from './Components/index'
+import { Test, SecondTest } from './Components/index'
 
 const RootStack = createStackNavigator(
   {
     Test: Test,
-    // Home: Home,
+    SecondTest: SecondTest,
   },
   {
     initialRouteName: 'Test'
@@ -16,9 +16,7 @@ const RootStack = createStackNavigator(
 
 class App extends React.Component {
 
-
   render() {
-    console.log('this is the test object', Test)
     return (
       <RootStack />
     )

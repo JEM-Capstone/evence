@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 
-class Test extends React.Component {
+class TestTwo extends React.Component {
 
   static navigationOptions = {
-      title: 'Test View'
+      title: 'Second Test View'
   }
 
 
@@ -20,11 +20,11 @@ class Test extends React.Component {
         <Text>Open up App.js to start working on your app!</Text>
         <Text>Changes you make will automatically reload.</Text>
         <Text>Shake your phone to open the developer menu.</Text>
-        <Text>This really is just a test</Text>
+        <Text>This really is just a second test</Text>
         <Button
-          title="SecondTest"
+          title="Test"
           onPress={() =>
-            navigate('SecondTest')
+            navigate('Test')
           }
         />
       </View>
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Test
+export default TestTwo
