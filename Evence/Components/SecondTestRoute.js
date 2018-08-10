@@ -1,26 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { WebBrowser, openAuthSessionAsync } from 'expo'
 
 
 class TestTwo extends React.Component {
 
+  // This just gives you a header with a title
   static navigationOptions = {
       title: 'Second Test View'
   }
 
+  state = {
 
+  }
 
   render() {
     const { navigate } = this.props.navigation
     const { navigation } = this.props
 
-    console.log(this.props)
-
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+
         <Text>This really is just a second test</Text>
         <Button
           title="Test"
@@ -35,9 +35,42 @@ class TestTwo extends React.Component {
           title="Go Back"
           onPress={() => navigation.goBack() }
         />
+        <Button
+          title="Log Users"
+          onPress={() => this.logUsers() }
+        />
+        <Button
+          title="Open Web Browser"
+          onPress={() => this.openWebBrowser() }
+        />
+        <Button
+          title="Open Auth Web Browser"
+          onPress={() => this.openAuthWebBrowser() }
+        />
       </View>
     );
   }
+
+  logUsers = async () => {
+    try {
+      let res = await fetch('http://localhost:8080/api/users')
+      console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  // Example of a realy simple way to open a web browser in app
+  openWebBrowser = async () => {
+    let result = await WebBrowser.openBrowserAsync('https://google.com')
+  }
+
+  // Example of a realy simple way to open a web browser for oAuth2 in browser
+  openAuthWebBrowser = async () => {
+    let result = await WebBrowser.openAuthSessionAsync('https://google.com')
+  }
+
+
 }
 
 const styles = StyleSheet.create({

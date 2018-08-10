@@ -1,6 +1,7 @@
 {
   "expo": {
-    "sdkVersion": "29.0.0"
+    "sdkVersion": "29.0.0",
+    "scheme": "evc"
   },
   "name": "Evence",
   "displayName": "Evence"

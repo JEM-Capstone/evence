@@ -2,15 +2,16 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import expo from 'expo'
-import { Test, SecondTest } from './Components/index'
+import { Test, SecondTest, Login } from './Components/index'
 
 const RootStack = createStackNavigator(
   {
+    Login: Login,
     Test: Test,
     SecondTest: SecondTest,
   },
   {
-    initialRouteName: 'Test'
+    initialRouteName: 'Login'
   }
 )
 
