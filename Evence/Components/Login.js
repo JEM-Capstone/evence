@@ -1,11 +1,12 @@
-import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import { AuthSession } from 'expo';
+import React from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import { AuthSession } from 'expo'
 
-const LI_APP_ID = '867abnxmxsh4a0';
+const LI_APP_ID = '867abnxmxsh4a0'
+const LI_APP_SECRET = 'R5xYPXLjHE6BVNBj'
 // this is something we make up & is supposed to be "hard to guess" - See the following under Step 2 and look for the parameters table
 // https://developer.linkedin.com/docs/oauth2
-const LI_APP_STATE = 'HsdHSD89SAD3';
+const LI_APP_STATE = 'HsdHSD89SAD3'
 
 export default class Login extends React.Component {
   state = {
@@ -13,11 +14,12 @@ export default class Login extends React.Component {
   };
 
   render() {
+    const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
         <Button title="Open LinkedIn Auth" onPress={this.handleOAuthLogin} />
         {this.state.result ? (
-          <Text>{JSON.stringify(this.state.result)}</Text>
+          <Text>{JSON.stringify(this.state.result.type)}</Text>
         ) : null}
       </View>
     )
@@ -34,8 +36,28 @@ export default class Login extends React.Component {
       `&state=${LI_APP_STATE}`,
     })
     await this.setState({ result })
-    console.log('here is my state', this.state)
-    if (this.state.result.params.state === LI_APP_STATE) console.log('so its true!')
+    // console.log('here is my state', this.state.result.params.code)
+    // this check gaurds against CSRF attacks
+    if (this.state.result.params.state !== LI_APP_STATE) {
+      // this should be a more useful message and also throw a HTTP 401 error
+      console.log('Not Authorized!')
+    } else {
+      // this.props.navigation.navigate('Test')
+
+      let accessTokenResponse = await AuthSession.startAsync({
+        authUrl:
+        `https://www.linkedin.com/oauth/v2/accessToken` +
+        `?grant_type=authorization_code` +
+        `&code=${this.state.result.params.code}` +
+        `&redirect_uri=${encodeURIComponent(redirectUrl)}` +
+        `&client_id=${LI_APP_ID}` +
+        `&client_secret=${LI_APP_SECRET}`
+      })
+
+      // console.log('accessTokenResponse',accessTokenResponse)
+      console.log('accessTokenResponse', accessTokenResponse)
+
+    }
   }
 
 
