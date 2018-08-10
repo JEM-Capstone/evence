@@ -14,8 +14,6 @@ class Test extends React.Component {
     const { navigate } = this.props.navigation
     const { navigation } = this.props
 
-    console.log(this.props)
-
     return (
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app!</Text>
