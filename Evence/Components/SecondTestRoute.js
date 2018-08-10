@@ -12,6 +12,7 @@ class TestTwo extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation
+    const { navigation } = this.props
 
     console.log(this.props)
 
@@ -26,6 +27,13 @@ class TestTwo extends React.Component {
           onPress={() =>
             navigate('Test')
           }
+        />
+        // example of how to add a back Button
+        // Note that this doesn't seem to work on the initial Route Component
+        // specified in App.js as 'initialRouteName'
+        <Button
+          title="Go Back"
+          onPress={() => navigation.goBack() }
         />
       </View>
     );

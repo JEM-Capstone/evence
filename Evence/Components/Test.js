@@ -12,6 +12,7 @@ class Test extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation
+    const { navigation } = this.props
 
     console.log(this.props)
 
@@ -24,7 +25,7 @@ class Test extends React.Component {
         <Button
           title="SecondTest"
           onPress={() =>
-            navigate('SecondTest')
+            navigation.navigate('SecondTest')
           }
         />
       </View>
