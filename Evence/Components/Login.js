@@ -11,46 +11,50 @@ const LI_APP_STATE = 'HsdHSD89SAD3'
 
 export default class Login extends React.Component {
   state = {
-    result: null,
-    redirectData: null,
-    authResult: null,
+    // result: null,
+    // redirectData: null,
+    authResult: {},
   };
 
   render() {
     const { navigate } = this.props.navigation
-    return (
-      <View style={styles.container}>
-        <Button title="Login with LinkedIn" onPress={this.handleOAuthLogin} />
-        {this.state.result ? ( <Text>{JSON.stringify(this.state.result.type)}</Text> ) : null}
-      </View>
-    )
+
+    if (this.state.authResult.type && this.state.authResult.type === 'success') {
+      return (
+        <View style={styles.container}>
+            <Text>{`Hey there, user!`}</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <Button title="Login with LinkedIn" onPress={this.handleOAuthLogin} />
+        </View>
+      )
+    }
   }
 
 
   handleRedirect = async event => {
-    console.log('handle redirect event', event)
     WebBrowser.dismissBrowser()
     let data = Linking.parse(event.url)
-    await this.setState({ redirectData: data })
+    // await this.setState({ redirectData: data })
     console.log('data in handleRedirect', data)
   }
 
   handleOAuthLogin = async () => {
     // gets the url to direct back to the app after any request to linkedin
-    // let redirectUrl = Linking.makeUrl()
     let redirectUrl = await Linking.getInitialURL()
-
-    console.log('redirecturl',redirectUrl)
     // this should change depending on where the server is running
     let authUrl = `http://172.17.20.3:8080/auth/linkedin`
 
     this.addLinkingListener()
 
     try {
-      // let authResult = WebBrowser.openAuthSessionAsync(`http://172.17.20.3:8080/auth/linkedin`, `exp://8k-xp5.veryspry.evence.exp.direct:80`)
-      let authResult = await WebBrowser.openAuthSessionAsync(`http://172.17.20.3:8080/auth/linkedin`)
+      let authResult = await WebBrowser.openAuthSessionAsync(`http://172.17.20.3:8080/auth/linkedin`, redirectUrl)
       await console.log('inside handleOauthLogin', authResult)
-      await this.setState({ authResult })
+      await this.setState({ authResult: authResult })
+      console.log(this.state)
     } catch (err) {
       console.log('A MASSIVE ERROR', err)
     }
@@ -60,12 +64,10 @@ export default class Login extends React.Component {
   }
 
   addLinkingListener = () => {
-    console.log('add linking listener')
     Linking.addEventListener('url', this.handleRedirect)
   }
 
   removeLinkingListener = () => {
-    console.log('remove linking listener')
     Linking.removeEventListener('url', this.handleRedirect)
   }
 
@@ -78,19 +80,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
-
-
-//   authUrl:
-//   `https://www.linkedin.com/uas/oauth2/authorization` +
-//   `?client_id=${LI_APP_ID}` +
-//   `&redirect_uri=${encodeURIComponent(redirectUrl)}`,
-
-
-
-// `https://www.facebook.com/v2.8/dialog/oauth?response_type=token` +
-// `&client_id=${LI_APP_ID}` +
-// `&redirect_uri=${encodeURIComponent(redirectUrl)}`,
-
-
-// `https://www.linkedin.com/uas/oauth2/authorization?client_id=759dczzx23nyic&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Flinkedin%2Fcallback&response_type=code&scope=r_basicprofile+r_emailaddress&state=8da572e31a8e66e6b1de54acddd14937d976ed06d7ed3217&client_id=*`
+})
