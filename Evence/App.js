@@ -1,30 +1,32 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
-import expo from 'expo'
-import { Test, SecondTest, Login } from './Components/index'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
+import expo from 'expo';
+import {
+  Test, SecondTest, Login, AllEvents,
+} from './Components/index';
 
 const RootStack = createStackNavigator(
   {
-    Login: Login,
-    Test: Test,
-    SecondTest: SecondTest,
+    Login,
+    Test,
+    SecondTest,
+    AllEvents,
   },
   {
-    initialRouteName: 'Login'
-  }
-)
+    initialRouteName: `AllEvents`,
+  },
+);
 
 class App extends React.Component {
-
   render() {
     return (
       <RootStack />
-    )
+    );
   }
 }
 
-export default App
+export default App;
 
 // export default class App extends React.Component {
 //   render() {

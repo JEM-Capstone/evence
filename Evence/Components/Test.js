@@ -1,18 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import {
+  StyleSheet, Text, View, Button,
+} from 'react-native';
 
 
 class Test extends React.Component {
-
   static navigationOptions = {
-      title: 'Test View'
+    title: `Test View`,
   }
 
 
-
   render() {
-    const { navigate } = this.props.navigation
-    const { navigation } = this.props
+    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
 
     return (
       <View style={styles.container}>
@@ -23,7 +23,7 @@ class Test extends React.Component {
         <Button
           title="SecondTest"
           onPress={() =>
-            navigation.navigate('SecondTest')
+            navigation.navigate(`SecondTest`)
           }
         />
       </View>
@@ -34,10 +34,10 @@ class Test extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: `#fff`,
+    alignItems: `center`,
+    justifyContent: `center`,
   },
 });
 
-export default Test
+export default Test;
