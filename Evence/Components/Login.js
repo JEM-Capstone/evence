@@ -23,6 +23,7 @@ export default class Login extends React.Component {
       return (
         <View style={styles.container}>
             <Text>{`Hey there, user!`}</Text>
+            <Button title="Logout" onPress={this.handleLogout} />
         </View>
       )
     } else {
@@ -51,7 +52,7 @@ export default class Login extends React.Component {
     this.addLinkingListener()
 
     try {
-      let authResult = await WebBrowser.openAuthSessionAsync(`http://172.17.20.3:8080/auth/linkedin`, redirectUrl)
+      let authResult = await WebBrowser.openAuthSessionAsync(`http://172.17.20.3:8080/auth/linkedin`,redirectUrl)
       await console.log('inside handleOauthLogin', authResult)
       await this.setState({ authResult: authResult })
       console.log(this.state)
@@ -71,6 +72,11 @@ export default class Login extends React.Component {
     Linking.removeEventListener('url', this.handleRedirect)
   }
 
+  handleLogout = async () => {
+    let res = await axios.get(`http://172.17.20.3:8080/auth/linkedin/logout`)
+    console.log('RESPONSE FROM LOGOUT:', res)
+    await this.setState({ authResult: {} })
+  }
 
 }
 
