@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { WebBrowser, openAuthSessionAsync } from 'expo'
+import {
+  StyleSheet, Text, View, Button,
+} from 'react-native';
+import { WebBrowser, openAuthSessionAsync } from 'expo';
 
 
 class TestTwo extends React.Component {
-
   // This just gives you a header with a title
   static navigationOptions = {
-      title: 'Second Test View'
+    title: `Second Test View`,
   }
 
   state = {
@@ -15,8 +16,8 @@ class TestTwo extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation
-    const { navigation } = this.props
+    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
 
     return (
       <View style={styles.container}>
@@ -25,7 +26,7 @@ class TestTwo extends React.Component {
         <Button
           title="Test"
           onPress={() =>
-            navigate('Test')
+            navigate(`Test`)
           }
         />
         // example of how to add a back Button
@@ -33,19 +34,19 @@ class TestTwo extends React.Component {
         // specified in App.js as 'initialRouteName'
         <Button
           title="Go Back"
-          onPress={() => navigation.goBack() }
+          onPress={() => navigation.goBack()}
         />
         <Button
           title="Log Users"
-          onPress={() => this.logUsers() }
+          onPress={() => this.logUsers()}
         />
         <Button
           title="Open Web Browser"
-          onPress={() => this.openWebBrowser() }
+          onPress={() => this.openWebBrowser()}
         />
         <Button
           title="Open Auth Web Browser"
-          onPress={() => this.openAuthWebBrowser() }
+          onPress={() => this.openAuthWebBrowser()}
         />
       </View>
     );
@@ -53,33 +54,31 @@ class TestTwo extends React.Component {
 
   logUsers = async () => {
     try {
-      let res = await fetch('http://localhost:8080/api/users')
-      console.log(res)
+      const res = await fetch(`http://localhost:8080/api/users`);
+      console.log(res);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
   // Example of a realy simple way to open a web browser in app
   openWebBrowser = async () => {
-    let result = await WebBrowser.openBrowserAsync('https://google.com')
+    const result = await WebBrowser.openBrowserAsync(`https://google.com`);
   }
 
   // Example of a realy simple way to open a web browser for oAuth2 in browser
   openAuthWebBrowser = async () => {
-    let result = await WebBrowser.openAuthSessionAsync('https://google.com')
+    const result = await WebBrowser.openAuthSessionAsync(`https://google.com`);
   }
-
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: `#fff`,
+    alignItems: `center`,
+    justifyContent: `center`,
   },
 });
 
-export default TestTwo
+export default TestTwo;
