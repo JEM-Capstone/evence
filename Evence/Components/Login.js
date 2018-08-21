@@ -90,7 +90,8 @@ export default class Login extends React.Component {
       `&client_id=${LI_APP_ID}` +
       `&client_secret=${LI_APP_SECRET}`
 
-    // let res = await axios.post(getTokenUrl)
+    let res = await axios.post(getTokenUrl)
+    console.log(res)
     try {
       let res = await axios.get('http://localhost:8080/auth/linkedin', {
         code: this.state.result.params.code
